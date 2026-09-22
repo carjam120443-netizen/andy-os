@@ -47,13 +47,13 @@ echo "==> Mounting Android-x86 system.img"
 sudo mount -o loop "$system_img" "$system_mount"
 
 echo "==> Locating framework-res.apk"
-framework="$(find "$system_mount" -type f -name 'framework-res.apk' -print -quit)"
+framework="$(sudo find "$system_mount" -type f -name 'framework-res.apk' -print -quit)"
 if [ -z "$framework" ]; then
   echo "ERROR: framework-res.apk was not found inside system.img" >&2
   echo "Framework directory candidates:" >&2
-  find "$system_mount" -type d -path '*/framework*' -print | head -50 >&2 || true
+  sudo find "$system_mount" -type d -path '*/framework*' -print | head -50 >&2 || true
   echo "Top-level /system tree:" >&2
-  find "$system_mount" -maxdepth 3 -type d -print | head -100 >&2 || true
+  sudo find "$system_mount" -maxdepth 3 -type d -print | head -100 >&2 || true
   exit 1
 fi
 echo "Found framework-res.apk at: $framework"
@@ -96,7 +96,7 @@ mkdir -p "$work/apk/repacked"
   zip -q -r -9 "$work/apk/repacked/framework-res.apk" .
 )
 
-cp "$work/apk/repacked/framework-res.apk" "$framework"
+sudo cp "$work/apk/repacked/framework-res.apk" "$framework"
 
 sync
 sudo umount "$system_mount"
