@@ -11,7 +11,7 @@ trap 'rm -rf "$work"' EXIT
 mkdir -p "$work/system" "$work/apk" "$work/png"
 
 echo "==> Locating Android-x86 system.sfs"
-system_sfs_path="$(xorriso -indev "$ISO" -find / -type f -name system.sfs -print 2>/dev/null | awk 'NF {p=$NF} END {print p}')"
+system_sfs_path="$(xorriso -indev "$ISO" -find / -type f -name 'system.sfs' 2>/dev/null | awk 'NF {p=$NF} END {print p}')"
 if [ -z "$system_sfs_path" ]; then
   echo "ERROR: could not find system.sfs anywhere in the ISO" >&2
   xorriso -indev "$ISO" -find / -maxdepth 2 -type f -print >&2
