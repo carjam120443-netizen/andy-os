@@ -10,8 +10,17 @@ trap 'rm -rf "$work"' EXIT
 
 mkdir -p "$work/system" "$work/apk" "$work/png"
 
+echo "==> Locating Android-x86 system.sfs"
+system_sfs_path="$(xorriso -indev "$ISO" -find / -type f -name system.sfs -print 2>/dev/null | awk 'NF {p=$NF} END {print p}')"
+if [ -z "$system_sfs_path" ]; then
+  echo "ERROR: could not find system.sfs anywhere in the ISO" >&2
+  xorriso -indev "$ISO" -find / -maxdepth 2 -type f -print >&2
+  exit 1
+fi
+echo "Found system.sfs at: $system_sfs_path"
+
 echo "==> Extracting Android-x86 system.sfs"
-xorriso -osirrox on -indev "$ISO" -extract /android/system.sfs "$work/system.sfs"
+xorriso -osirrox on -indev "$ISO" -extract "$system_sfs_path" "$work/system.sfs"
 
 echo "==> Unpacking system.sfs"
 unsquashfs -d "$work/system-root" "$work/system.sfs" >/dev/null
