@@ -1,0 +1,54 @@
+name: Build Andy OS x86_64 ISO
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/build-iso.yml"
+      - "configs/**"
+      - "manifests/**"
+      - "scripts/**"
+      - "build/**"
+
+permissions:
+  contents: read
+
+jobs:
+  build-iso:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout Andy OS
+        uses: actions/checkout@v4
+
+      - name: Download Android-x86 9.0-r2 x86_64 ISO
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          curl -fL --retry 5 --retry-delay 5             "https://sourceforge.net/projects/android-x86/files/Release%209.0/android-x86_64-9.0-r2.iso/download"             -o dist/andy-os-x86_64-9.0-r2.iso
+
+      - name: Verify ISO
+        run: |
+          set -euo pipefail
+          echo "f7eb8fc56f29ad5432335dc054183acf086c539f3990f0b6e9ff58bd6df4604  dist/andy-os-x86_64-9.0-r2.iso" | sha256sum -c -
+
+      - name: Write build metadata
+        run: |
+          cat > dist/BUILD.txt <<'EOF'
+          Andy OS x86_64 base ISO
+          Base: Android-x86 9.0-r2
+          Architecture: x86_64
+          Source: https://www.android-x86.org/
+          Verification: SHA-256 verified against the published SourceForge file hash.
+          This artifact is the clean upstream base; customization comes next.
+          EOF
+
+      - name: Upload ISO artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: andy-os-x86_64-9.0-r2
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14
