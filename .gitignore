@@ -1,0 +1,14 @@
+# Android source/build output
+android-x86/
+out/
+.repo/
+ccache/
+*.img
+*.iso
+*.sfs
+
+# Host/editor files
+.idea/
+.vscode/
+*.swp
+.DS_Store
