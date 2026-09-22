@@ -64,7 +64,8 @@ jobs:
           sha256sum dist/andy-os-x86_64-9.0-r2.iso || echo "WARNING: sha256sum failed; continuing with structural and boot validation."
           echo "El Torito boot report:"
           xorriso -indev dist/andy-os-x86_64-9.0-r2.iso -report_el_torito plain -report_system_area plain
-          xorriso -indev dist/andy-os-x86_64-9.0-r2.iso -find /android -maxdepth 1 -type f -print
+          echo "Android ISO file listing:"
+          xorriso -indev dist/andy-os-x86_64-9.0-r2.iso -find /android -maxdepth 1 -type f
           echo "Bootloader structure check passed."
 
       - name: QEMU boot smoke test
