@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Andy OS robot wallpaper: original vector artwork created for this project. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="Andy OS robot wallpaper">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="42%" r="75%">
+      <stop offset="0%" stop-color="#243b2a"/>
+      <stop offset="0.58" stop-color="#101914"/>
+      <stop offset="1" stop-color="#050806"/>
+    </radialGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#15261b" stop-opacity="0"/>
+      <stop offset="1" stop-color="#020302" stop-opacity=".9"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="18" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <circle cx="960" cy="445" r="300" fill="#78c257" opacity=".06"/>
+  <g opacity=".12" stroke="#78c257" fill="none">
+    <path d="M160 780H1760"/>
+    <path d="M280 850H1640"/>
+    <path d="M420 920H1500"/>
+  </g>
+  <ellipse cx="960" cy="815" rx="410" ry="75" fill="#78c257" opacity=".12" filter="url(#glow)"/>
+  <g transform="translate(960 205)">
+    <g stroke="#9be477" stroke-width="22" stroke-linecap="round">
+      <path d="M-150 70L-245 -30"/>
+      <path d="M150 70L245 -30"/>
+    </g>
+    <g fill="#9be477">
+      <circle cx="-245" cy="-30" r="15"/>
+      <circle cx="245" cy="-30" r="15"/>
+    </g>
+    <path d="M-285 110a285 285 0 0 1 570 0v75H-285z" fill="#78c257"/>
+    <rect x="-285" y="110" width="570" height="455" rx="90" fill="#78c257"/>
+    <rect x="-390" y="155" width="85" height="285" rx="42" fill="#78c257"/>
+    <rect x="305" y="155" width="85" height="285" rx="42" fill="#78c257"/>
+    <rect x="-175" y="525" width="105" height="235" rx="50" fill="#78c257"/>
+    <rect x="70" y="525" width="105" height="235" rx="50" fill="#78c257"/>
+    <circle cx="-105" cy="205" r="25" fill="#0b120d"/>
+    <circle cx="105" cy="205" r="25" fill="#0b120d"/>
+    <path d="M-275 110H275" stroke="#0b120d" stroke-width="12"/>
+  </g>
+  <rect y="720" width="1920" height="360" fill="url(#floor)"/>
+  <text x="960" y="945" text-anchor="middle" fill="#d8f5cf" font-family="sans-serif" font-size="54" font-weight="700" letter-spacing="12">ANDY OS</text>
+  <text x="960" y="1005" text-anchor="middle" fill="#78c257" font-family="sans-serif" font-size="22" letter-spacing="6">ANDROID FOR PC • x86_64</text>
+</svg>
