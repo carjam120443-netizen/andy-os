@@ -8,7 +8,7 @@ WALLPAPER="${3:?usage: customize-iso.sh input.iso output.iso wallpaper.svg}"
 work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
 
-mkdir -p "$work/system" "$work/apk" "$work/png"
+mkdir -p "$work/apk" "$work/png"
 
 echo "==> Locating Android-x86 system.sfs"
 system_sfs_path="$(xorriso -indev "$ISO" -find / -type f -name 'system.sfs' 2>/dev/null | awk 'NF {p=$NF} END {print p}' | sed "s/^'//;s/'$//")"
@@ -25,8 +25,17 @@ xorriso -osirrox on -indev "$ISO" -extract "$system_sfs_path" "$work/system.sfs"
 echo "==> Unpacking system.sfs"
 unsquashfs -d "$work/system-root" "$work/system.sfs" >/dev/null
 
-framework="$(find "$work/system-root/system/framework" -maxdepth 1 -type f -name 'framework-res.apk' -print -quit)"
-test -n "$framework"
+echo "==> Locating framework-res.apk"
+framework="$(find "$work/system-root" -type f -name 'framework-res.apk' -print -quit)"
+if [ -z "$framework" ]; then
+  echo "ERROR: framework-res.apk was not found inside system.sfs" >&2
+  echo "Framework directory candidates:" >&2
+  find "$work/system-root" -type d -path '*/framework*' -print | head -50 >&2 || true
+  echo "Top-level system tree:" >&2
+  find "$work/system-root" -maxdepth 3 -type d -print | head -100 >&2 || true
+  exit 1
+fi
+echo "Found framework-res.apk at: $framework"
 
 echo "==> Rendering Andy OS wallpaper"
 rsvg-convert -w 1920 -h 1080 "$WALLPAPER" -o "$work/png/default_wallpaper.png"
@@ -39,15 +48,20 @@ unzip -q "$framework" -d "$work/apk/root"
 mapfile -t wallpaper_entries < <(find "$work/apk/root/res" -type f \( -name 'default_wallpaper.png' -o -name 'default_wallpaper.jpg' -o -name 'default_wallpaper.jpeg' \))
 if [ "${#wallpaper_entries[@]}" -eq 0 ]; then
   echo "ERROR: framework-res.apk has no default_wallpaper resource" >&2
+  find "$work/apk/root/res" -type f -iname '*wallpaper*' -print >&2 || true
   exit 1
 fi
 
+echo "Found ${#wallpaper_entries[@]} default wallpaper resource(s)."
 for entry in "${wallpaper_entries[@]}"; do
   case "$entry" in
     *.png) cp "$work/png/default_wallpaper.png" "$entry" ;;
     *.jpg|*.jpeg) convert "$work/png/default_wallpaper.png" -quality 95 "$entry" ;;
   esac
 done
+
+# Remove stale APK signature files after changing resources.
+rm -rf "$work/apk/root/META-INF"
 
 rm -rf "$work/apk/repacked"
 mkdir -p "$work/apk/repacked"
