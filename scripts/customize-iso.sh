@@ -11,8 +11,7 @@ trap 'rm -rf "$work"' EXIT
 mkdir -p "$work/system" "$work/apk" "$work/png"
 
 echo "==> Extracting Android-x86 system.sfs"
-xorriso -osirrox on -indev "$ISO" -extract /android/system.sfs "$work/iso"
-cp "$work/iso/android/system.sfs" "$work/system.sfs"
+xorriso -osirrox on -indev "$ISO" -extract /android/system.sfs "$work/system.sfs"
 
 echo "==> Unpacking system.sfs"
 unsquashfs -d "$work/system-root" "$work/system.sfs" >/dev/null
