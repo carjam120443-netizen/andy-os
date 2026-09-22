@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Official Android robot artwork reference.
-  The artwork is Google's Android robot, reproduced from the source artwork
-  published through Android's brand materials and mirrored on Wikimedia Commons.
-  The Android robot may be reproduced/modified under CC BY 3.0 with Google's
-  required attribution. This wrapper intentionally references the verified
-  original artwork rather than drawing an approximation.
+  Android robot artwork reproduced from work created and shared by Google.
+  Used according to the Creative Commons Attribution 3.0 license.
+  Source: https://commons.wikimedia.org/wiki/File:Android_robot.svg
+  Attribution: "The Android robot is reproduced or modified from work created
+  and shared by Google and used according to terms described in the Creative
+  Commons 3.0 Attribution License."
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 601" role="img" aria-label="Android robot">
-  <image href="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg"
-         x="0" y="0" width="512" height="601"
-         preserveAspectRatio="xMidYMid meet"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-147 -68 294 343" role="img" aria-label="Android robot">
+  <g fill="#A4C639">
+    <use href="#b" stroke-width="14.4" stroke="#FFF"/>
+    <use href="#a" transform="scale(-1,1)"/>
+    <g id="a" stroke-width="7.2" stroke="#FFF">
+      <rect rx="6.5" transform="rotate(29)" height="86" width="13" y="-86" x="14"/>
+      <rect id="c" rx="24" height="133" width="48" y="41" x="-143"/>
+      <use y="97" x="85" href="#c"/>
+    </g>
+    <g id="b">
+      <ellipse cy="41" rx="91" ry="84"/>
+      <rect rx="22" height="182" width="182" y="20" x="-91"/>
+    </g>
+  </g>
+  <g stroke="#FFF" stroke-width="7.2" fill="#FFF">
+    <path d="M-95 44.5H95"/>
+    <circle cx="-42" r="4"/>
+    <circle cx="42" r="4"/>
+  </g>
 </svg>
